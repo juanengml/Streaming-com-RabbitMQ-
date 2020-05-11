@@ -33,7 +33,7 @@ foo@bar:~ $ source env/bin/activate
 
 #### DEMO 
 
-![](https://media.giphy.com/media/kegaGtunKMln5lI93w/giphy.gif)
+![](https://media.giphy.com/media/UrhsiAqpRVm73Psskz/giphy.gif)
 
 
 LINK - https://www.youtube.com/watch?v=DzO9vV2RBmI
