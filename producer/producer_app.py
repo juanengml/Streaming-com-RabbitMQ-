@@ -10,21 +10,32 @@ import sys
 import time
 import cv2
 
-rabbit_url = 'amqp://guest:guest@192.168.0.12:5672//'
+rabbit_url = 'amqp://guest:guest@192.168.0.10:5672//'
+print("[*] Conectando no rabbitMQ")
+
 conn = Connection(rabbit_url)
 channel = conn.channel()
-exchange = Exchange("video-exchange", type="direct", delivery_mode=1)
+
+print("[*] Conectando na exchange pose-estimation")
+
+exchange = Exchange("pose-estimation", type="direct", delivery_mode=1)
 producer = Producer(exchange=exchange, channel=channel, routing_key="video")
-queue = Queue(name="video-queue", exchange=exchange, routing_key="video")
+queue = Queue(name="pose-estimation", exchange=exchange, routing_key="video")
+
 queue.maybe_bind(conn)
 queue.declare()
 
-capture = cv2.VideoCapture(0)
+print("[*] Pegando MP4 video ")
+capture = cv2.VideoCapture("aha.avi")
+print("[*] ENCODING PARAMETER  ")
 encode_param=[int(cv2.IMWRITE_JPEG_QUALITY),90]
 
 while True:
+#    print("SEND FRAME TO CONSUMER ")
     ret, frame = capture.read()
+#    print(len(frame))
     if ret is True:
+        print("[*] PUBLICANDO DATA IN CONSUMER len(frame): ",len(frame))
         result, imgencode = cv2.imencode('.jpg', frame, encode_param)
         producer.publish(imgencode.tobytes(), content_type='image/jpeg', content_encoding='binary')
     time.sleep(0.001)
