@@ -4,8 +4,17 @@ import sys
 import time
 from kombu import Connection, Exchange, Queue
 from kombu.mixins import ConsumerMixin
+from datetime import datetime as dt
+import uuid
 
-rabbit_url = 'amqp://guest:guest@172.31.43.223:5672//'
+rabbit_url = 'amqp://guest:guest@3.80.172.11:5672//'
+
+
+def Model(frame):
+    # aqui
+    # codigo entra aqui
+    #
+    print(uuid.uuid1(),type(frame))
 
 class Worker(ConsumerMixin):
     def __init__(self, connection, queues):
@@ -21,8 +30,10 @@ class Worker(ConsumerMixin):
         size = sys.getsizeof(body)
         np_array = np.frombuffer(body, dtype=np.uint8)
         image = cv2.imdecode(np_array, 1)
-        img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        print("[*] CONSUMER RECEBENDO len(frame) RECEBIDO: ",len(img))
+        Model(image)
+        cv2.imshow("image", image)
+        cv2.waitKey(1)
+        print(dt.now())
         message.ack()
 
 def run():
