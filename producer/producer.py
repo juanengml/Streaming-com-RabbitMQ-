@@ -11,6 +11,10 @@ import time
 import cv2
 #http://34.239.124.114:9090/lab?
 
+
+## endpoint  em cloud 
+
+
 rabbit_url = 'amqp://guest:guest@3.80.172.11:5672//'
 print("[*] Conectando no rabbitMQ")
 

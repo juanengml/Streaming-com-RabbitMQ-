@@ -1,6 +1,14 @@
 # Streaming-com-RabbitMQ-
 Aqui vamos montar nosso sistema de mensageria para streaming com RabbitMQ
 
+#### Arquitetura 
+![](image.png)
+
+
+##### requisitos 
+
+* docker-ce  
+
 #### instalando ambiente docker do rabbitMQ
 ```console
 
@@ -11,25 +19,20 @@ foo@bar:~ $ sudo docker run -d --hostname my-rabbit --name some-rabbit -p 8081:1
 #### Crie ambiente python e instale as bibliotecas
 ```console
 
-foo@bar:~ $ virtualenv env --python=python3.6
+foo@bar:~ $ cd producer/
 
-foo@bar:~ $ source env/bin/activate
-(env) foo@bar:~ $ pip install -r requirementes.txt
+foo@bar:~ producer $ make deploy-prod
+.... CRIANDO APP e SUBINDO
 
 ```
 ---
 #### Em seguida abra o terminal separadamente RODE O PRODUCER
 ```console
-(env) foo@bar:~ $ python producer/producer_app.py
+foo@bar:~ $ cd consumer/make deploy-prod
+foo@bar:~ consumer $ 
 
 ```
 
-
-#### Em seguida abra o terminal separadamente RODE O CONSUMER
-```console
-(env) foo@bar:~ $ python consumer/consumer_app.py
-
-```
 
 #### DEMO 
 
