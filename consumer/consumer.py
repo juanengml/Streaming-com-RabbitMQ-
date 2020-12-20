@@ -7,14 +7,16 @@ from kombu.mixins import ConsumerMixin
 from datetime import datetime as dt
 import uuid
 
-rabbit_url = 'amqp://guest:guest@3.80.172.11:5672//'
+rabbit_url = "amqp://guest:guest@192.168.0.115:5672//"
 
 
 def Model(frame):
     # aqui
     # codigo entra aqui
-    #
-    print(uuid.uuid1(),type(frame))
+    #cv2.imshow('image',frame)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()
+    print(uuid.uuid1(),type(frame),dt.now())
 
 class Worker(ConsumerMixin):
     def __init__(self, connection, queues):
@@ -31,9 +33,6 @@ class Worker(ConsumerMixin):
         np_array = np.frombuffer(body, dtype=np.uint8)
         image = cv2.imdecode(np_array, 1)
         Model(image)
-        cv2.imshow("image", image)
-        cv2.waitKey(1)
-        print(dt.now())
         message.ack()
 
 def run():

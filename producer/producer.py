@@ -15,7 +15,7 @@ import cv2
 ## endpoint  em cloud 
 
 
-rabbit_url = 'amqp://guest:guest@3.80.172.11:5672//'
+rabbit_url = 'amqp://guest:guest@192.168.0.115:5672//'
 print("[*] Conectando no rabbitMQ")
 
 conn = Connection(rabbit_url)
@@ -38,7 +38,7 @@ queue.maybe_bind(conn)
 queue.declare()
 
 print("[*] Pegando MP4 video ")
-capture = cv2.VideoCapture(0)
+capture = cv2.VideoCapture("pessoas-andando.mp4")
 print("[*] ENCODING PARAMETER  ")
 encode_param=[int(cv2.IMWRITE_JPEG_QUALITY),90]
 
