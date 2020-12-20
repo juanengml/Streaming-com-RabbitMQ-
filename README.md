@@ -1,6 +1,8 @@
-# Streaming-com-RabbitMQ-
+# Streaming-com-RabbitMQ-usando-AWS-IC2
 Aqui vamos montar nosso sistema de mensageria para streaming com RabbitMQ
 
+## ALERTA ESSA INFRA E DESENHADA PARA OPERAR EM CLOUD 
+![](aws.png)
 #### Arquitetura 
 ![](image.png)
 
