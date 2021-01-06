@@ -1,22 +1,22 @@
 import cv2
-import numpy as np
 import sys
 import time
+import uuid
+import numpy as np
 from kombu import Connection, Exchange, Queue
 from kombu.mixins import ConsumerMixin
 from datetime import datetime as dt
-import uuid
+from pyagender import PyAgender
 
 rabbit_url = "amqp://guest:guest@192.168.0.115:5672//"
 
+agender = PyAgender() 
 
 def Model(frame):
     # aqui
     # codigo entra aqui
-    #cv2.imshow('image',frame)
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
-    print(uuid.uuid1(),type(frame),dt.now())
+    faces = agender.detect_genders_ages(frame)
+    print(uuid.uuid1(),type(frame),dt.now(),faces)
 
 class Worker(ConsumerMixin):
     def __init__(self, connection, queues):
