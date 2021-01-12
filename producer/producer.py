@@ -15,7 +15,7 @@ import cv2
 ## endpoint  em cloud 
 
 
-rabbit_url = 'amqp://guest:guest@192.168.0.115:5672//'
+rabbit_url = 'amqp://guest:guest@172.31.65.120:5672//'
 print("[*] Conectando no rabbitMQ")
 
 conn = Connection(rabbit_url)
