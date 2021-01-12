@@ -6,17 +6,11 @@ import numpy as np
 from kombu import Connection, Exchange, Queue
 from kombu.mixins import ConsumerMixin
 from datetime import datetime as dt
-from pyagender import PyAgender
 
-rabbit_url = "amqp://guest:guest@192.168.0.115:5672//"
-
-agender = PyAgender() 
+rabbit_url = "amqp://guest:guest@172.31.65.120:5672//"
 
 def Model(frame):
-    # aqui
-    # codigo entra aqui
-    faces = agender.detect_genders_ages(frame)
-    print(uuid.uuid1(),type(frame),dt.now(),faces)
+    print(uuid.uuid1(),type(frame),dt.now())
 
 class Worker(ConsumerMixin):
     def __init__(self, connection, queues):
