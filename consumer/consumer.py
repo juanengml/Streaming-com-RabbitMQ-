@@ -17,10 +17,10 @@ with open("config.json") as json_file:
 rabbit_url = data['RABBITMQ'] # "amqp://guest:guest@172.31.65.120:5672//"
 
 def Model(frame):
-    print(uuid.uuid1(),type(frame),dt.now())
-    bbox, label, conf = cv.detect_common_objects(img)
+    print(type(frame),dt.now())
+    bbox, label, conf = cv.detect_common_objects(frame, confidence=0.2, model="yolov4-tiny")
     print(bbox, label, conf)
-    output_image = draw_bbox(img, bbox, label, conf) 
+    output_image = draw_bbox(frame, bbox, label, conf) 
     return output_image
 
 class Worker(ConsumerMixin):
@@ -38,8 +38,8 @@ class Worker(ConsumerMixin):
         np_array = np.frombuffer(body, dtype=np.uint8)
         image = cv2.imdecode(np_array, 1)
         output_image = Model(image)
-        cv2.imshow("image", output_image)
-        cv2.waitKey(1)
+#        cv2.imshow("image", output_image)
+#        cv2.waitKey(1)
         message.ack()
 
 def run():

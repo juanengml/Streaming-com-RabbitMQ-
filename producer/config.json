@@ -1,4 +1,4 @@
 {
   "RABBITMQ":"amqp://guest:guest@192.168.0.109:5672//",
-  "VIDEO_INPUT": "http://quantificacao.s3-sa-east-1.amazonaws.com/video.mp4"
+  "VIDEO_INPUT": "http://76.127.206.217:8080/video"
 }
