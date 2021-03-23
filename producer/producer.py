@@ -9,26 +9,21 @@ from kombu import Queue
 import sys
 import time
 import cv2
-#http://34.239.124.114:9090/lab?
 
+import json
 
-## endpoint  em cloud 
+with open("config.json") as json_file:
+   data = json.load(json_file)
 
-
-rabbit_url = 'amqp://guest:guest@172.31.65.120:5672//'
-print("[*] Conectando no rabbitMQ")
+rabbit_url =  data['RABBITMQ'] # 'amqp://guest:guest@192.168.0.109:5672//'
+endpoint_camera = data['VIDEO_INPUT']
 
 conn = Connection(rabbit_url)
 channel = conn.channel()
 
-print("[*] Conectando na exchange FRAME-CAPTURE")
-
-#rabbit_url = 'amqp://guest:guest@172.31.86.53:5672//'
-
 _exchange = "video-exchange"
 _queue = "video-queue"
 _routing_key = "video"
-
 
 exchange = Exchange(_exchange, type="direct", delivery_mode=1)
 producer = Producer(exchange=exchange, channel=channel, routing_key=_routing_key)
@@ -37,9 +32,8 @@ queue = Queue(name=_queue, exchange=exchange, routing_key=_routing_key)
 queue.maybe_bind(conn)
 queue.declare()
 
-print("[*] Pegando MP4 video ")
-capture = cv2.VideoCapture("pessoas-andando.mp4")
-print("[*] ENCODING PARAMETER  ")
+capture = cv2.VideoCapture(endpoint_camera)
+
 encode_param=[int(cv2.IMWRITE_JPEG_QUALITY),90]
 
 while True:

@@ -6,11 +6,22 @@ import numpy as np
 from kombu import Connection, Exchange, Queue
 from kombu.mixins import ConsumerMixin
 from datetime import datetime as dt
+import cvlib as cv
+from cvlib.object_detection import draw_bbox
+import json
 
-rabbit_url = "amqp://guest:guest@172.31.65.120:5672//"
+with open("config.json") as json_file:
+   data = json.load(json_file)
+
+
+rabbit_url = data['RABBITMQ'] # "amqp://guest:guest@172.31.65.120:5672//"
 
 def Model(frame):
     print(uuid.uuid1(),type(frame),dt.now())
+    bbox, label, conf = cv.detect_common_objects(img)
+    print(bbox, label, conf)
+    output_image = draw_bbox(img, bbox, label, conf) 
+    return output_image
 
 class Worker(ConsumerMixin):
     def __init__(self, connection, queues):
@@ -26,7 +37,9 @@ class Worker(ConsumerMixin):
         size = sys.getsizeof(body)
         np_array = np.frombuffer(body, dtype=np.uint8)
         image = cv2.imdecode(np_array, 1)
-        Model(image)
+        output_image = Model(image)
+        cv2.imshow("image", output_image)
+        cv2.waitKey(1)
         message.ack()
 
 def run():
